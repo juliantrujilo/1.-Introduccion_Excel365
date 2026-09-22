@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Historia de Excel | SENA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --excel: #217346;
+  --excel-claro: #34A853;
+  --excel-oscuro: #185C37;
+  --sena-verde: #39a900;
+  --sena-naranja: #ff6b00;
+  --texto: #1a1a2e;
+  --texto-dim: #4a5568;
+  --texto-dimmer: #718096;
+  --bg: #f8fafc;
+  --borde: #e2e8f0;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; color:var(--texto); background:var(--bg); line-height:1.6; overflow-x:hidden; }
+
+/* TOPBAR */
+.topbar {
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,0.96); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--borde); padding:12px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05); flex-wrap:wrap; gap:10px;
+}
+.topbar-left { display:flex; align-items:center; gap:12px; }
+.sena-logo { background:var(--sena-verde); color:#fff; font-weight:900; font-size:15px; padding:6px 13px; border-radius:8px; letter-spacing:1px; }
+.topbar-brand { font-family:'Syne',sans-serif; font-size:13px; font-weight:700; }
+.topbar-sub { font-size:11px; color:var(--texto-dimmer); margin-top:1px; }
+.topbar-nav { display:flex; gap:16px; flex-wrap:wrap; }
+.topbar-nav a { text-decoration:none; font-size:12px; font-weight:600; color:var(--texto-dimmer); transition:color .2s; white-space:nowrap; }
+.topbar-nav a:hover { color:var(--excel); }
+
+/* HERO */
+.hero {
+  background:linear-gradient(135deg,#0a1f0e 0%,#154428 40%,#217346 75%,#2a8c5a 100%);
+  padding:72px 20px 60px; text-align:center; position:relative; overflow:hidden;
+}
+.hero::before { content:''; position:absolute; width:600px; height:600px; background:var(--excel); border-radius:50%; top:-300px; left:-150px; opacity:0.15; filter:blur(90px); }
+.hero::after { content:''; position:absolute; width:400px; height:400px; background:#34A853; border-radius:50%; bottom:-200px; right:-100px; opacity:0.10; filter:blur(80px); }
+.hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(33,115,70,0.2); border:1px solid rgba(52,168,83,0.4); color:#a8e6b8; padding:7px 20px; border-radius:30px; font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; margin-bottom:24px; position:relative; z-index:1; }
+.hero-icon { font-size:clamp(48px,8vw,80px); margin-bottom:16px; position:relative; z-index:1; display:block; filter:drop-shadow(0 8px 24px rgba(33,115,70,0.5)); }
+.hero h1 { font-family:'Syne',sans-serif; font-size:clamp(32px,7vw,64px); font-weight:800; color:#fff; line-height:1.1; margin-bottom:16px; position:relative; z-index:1; }
+.hero h1 em { font-style:normal; background:linear-gradient(135deg,#a8e6b8,#34A853); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero-desc { font-size:clamp(14px,2.2vw,18px); color:rgba(255,255,255,0.72); max-width:600px; margin:0 auto 36px; position:relative; z-index:1; }
+
+/* STATS HERO */
+.hero-stats { display:flex; justify-content:center; gap:28px; flex-wrap:wrap; position:relative; z-index:1; }
+.hstat { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.13); border-radius:16px; padding:16px 28px; text-align:center; backdrop-filter:blur(8px); }
+.hstat-num { font-family:'Syne',sans-serif; font-size:30px; font-weight:800; color:#fff; display:block; }
+.hstat-label { font-size:12px; color:rgba(255,255,255,0.6); font-weight:500; }
+
+/* SECCIÓN GENÉRICA */
+.section { max-width:1040px; margin:0 auto; padding:60px 20px; }
+.section-tag { display:inline-flex; align-items:center; gap:8px; background:rgba(33,115,70,0.08); border:1px solid rgba(33,115,70,0.2); color:var(--excel); padding:6px 16px; border-radius:20px; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px; }
+.section h2 { font-family:'Syne',sans-serif; font-size:clamp(24px,4vw,38px); font-weight:800; color:var(--texto); margin-bottom:12px; }
+.section h2 span { color:var(--excel); }
+.section-intro { font-size:clamp(14px,1.8vw,17px); color:var(--texto-dim); max-width:700px; margin-bottom:40px; line-height:1.7; }
+
+/* CARD FUNDADORES */
+.founders-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; margin-bottom:40px; }
+.founder-card {
+  background:#fff; border:2px solid var(--borde); border-radius:20px;
+  padding:28px; position:relative; overflow:hidden;
+  transition:transform .2s, box-shadow .2s;
+}
+.founder-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(33,115,70,0.12); }
+.founder-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:linear-gradient(90deg,var(--excel),var(--excel-claro)); }
+.founder-avatar { font-size:52px; margin-bottom:16px; display:block; }
+.founder-name { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:var(--texto); margin-bottom:4px; }
+.founder-role { font-size:12px; font-weight:700; color:var(--excel); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+.founder-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; }
+
+/* TIMELINE */
+.timeline { position:relative; padding-left:32px; }
+.timeline::before { content:''; position:absolute; left:10px; top:0; bottom:0; width:2px; background:linear-gradient(180deg,var(--excel),rgba(33,115,70,0.1)); }
+.titem { position:relative; margin-bottom:36px; }
+.titem::before { content:''; position:absolute; left:-28px; top:6px; width:14px; height:14px; background:var(--excel); border-radius:50%; border:3px solid #fff; box-shadow:0 0 0 2px var(--excel); }
+.titem-year { display:inline-flex; align-items:center; background:var(--excel); color:#fff; padding:3px 12px; border-radius:20px; font-size:12px; font-weight:800; margin-bottom:8px; letter-spacing:1px; }
+.titem-title { font-family:'Syne',sans-serif; font-size:18px; font-weight:800; color:var(--texto); margin-bottom:6px; }
+.titem-desc { font-size:14px; color:var(--texto-dim); line-height:1.6; }
+.titem-highlight { display:inline-flex; align-items:center; gap:6px; background:rgba(33,115,70,0.06); border:1px solid rgba(33,115,70,0.15); color:var(--excel); padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; margin-top:8px; }
+
+/* VERSIONES GRID */
+.versions-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px; }
+.version-card {
+  background:#fff; border:2px solid var(--borde); border-radius:16px;
+  padding:20px; text-align:center; transition:all .2s;
+  cursor:default;
+}
+.version-card:hover { border-color:var(--excel); transform:translateY(-2px); box-shadow:0 8px 20px rgba(33,115,70,0.1); }
+.version-card.actual { border-color:var(--excel); background:linear-gradient(135deg,rgba(33,115,70,0.04),#fff); }
+.v-year { font-size:11px; font-weight:700; color:var(--texto-dimmer); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.v-name { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--texto); margin-bottom:8px; }
+.v-desc { font-size:12px; color:var(--texto-dim); line-height:1.5; }
+.v-badge { display:inline-block; background:var(--excel); color:#fff; font-size:10px; font-weight:700; padding:2px 10px; border-radius:20px; margin-top:8px; letter-spacing:1px; }
+
+/* FEATURES GRID */
+.features-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:20px; }
+.feat-card {
+  background:#fff; border:2px solid var(--borde); border-radius:18px;
+  padding:24px; display:flex; gap:16px; align-items:flex-start;
+  transition:all .2s;
+}
+.feat-card:hover { border-color:var(--excel); box-shadow:0 6px 20px rgba(33,115,70,0.08); }
+.feat-icon { font-size:32px; flex-shrink:0; }
+.feat-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:var(--texto); margin-bottom:5px; }
+.feat-desc { font-size:13px; color:var(--texto-dim); line-height:1.5; }
+
+/* DATO CURIOSO */
+.dato-box {
+  background:linear-gradient(135deg,rgba(33,115,70,0.07),rgba(52,168,83,0.03));
+  border:2px solid rgba(33,115,70,0.18);
+  border-radius:20px; padding:28px 32px;
+  display:flex; gap:18px; align-items:flex-start; margin-bottom:24px;
+}
+.dato-icon { font-size:36px; flex-shrink:0; }
+.dato-title { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--excel); margin-bottom:6px; }
+.dato-text { font-size:14px; color:var(--texto-dim); line-height:1.6; }
+.dato-text strong { color:var(--texto); }
+
+/* SEPARADOR */
+.sep { height:2px; background:linear-gradient(90deg,transparent,var(--borde),transparent); margin:0; }
+
+/* AGENDA DEL DÍA */
+.agenda-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; }
+.agenda-card {
+  background:#fff; border:2px solid var(--borde); border-radius:18px;
+  padding:22px; position:relative; overflow:hidden;
+}
+.agenda-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--ac-color); }
+.agenda-num { font-family:'Syne',sans-serif; font-size:32px; font-weight:800; color:var(--ac-color); opacity:0.15; position:absolute; top:10px; right:14px; }
+.agenda-hora { font-size:12px; font-weight:700; color:var(--ac-color); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
+.agenda-title { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:var(--texto); margin-bottom:4px; }
+.agenda-desc { font-size:12px; color:var(--texto-dim); line-height:1.5; }
+
+/* FOOTER */
+footer { background:var(--texto); text-align:center; padding:28px; font-size:12px; color:rgba(255,255,255,0.55); line-height:2; margin-top:60px; }
+footer span { color:#fff; font-weight:700; }
+
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(24px); transition:opacity .55s ease,transform .55s ease; }
+.reveal.in { opacity:1; transform:translateY(0); }
+.reveal-delay-1 { transition-delay:.1s; }
+.reveal-delay-2 { transition-delay:.2s; }
+.reveal-delay-3 { transition-delay:.3s; }
+
+/* BG ALTERNADO */
+.bg-alt { background:#fff; }
+
+@media(max-width:640px){
+  .topbar { flex-direction:column; align-items:flex-start; }
+  .hero-stats { gap:12px; }
+  .dato-box { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="topbar-left">
+    <div class="sena-logo">SENA</div>
+    <div>
+      <div class="topbar-brand">Prevención y Control Ambiental · Sesión Excel</div>
+      <div class="topbar-sub">CADP del Huila · Ficha 3410069</div>
+    </div>
+  </div>
+  <div class="topbar-nav">
+    <a href="#origen">Origen</a>
+    <a href="#fundadores">Creadores</a>
+    <a href="#evolucion">Evolución</a>
+    <a href="#versiones">Versiones</a>
+    <a href="#hoy">Excel Hoy</a>
+    <a href="#agenda">Agenda</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">📅 Sesión de hoy · 6 horas</div>
+  <span class="hero-icon">📊</span>
+  <h1>Conoce<br><em>Excel</em></h1>
+  <p class="hero-desc">La hoja de cálculo más poderosa del mundo. Hoy aprenderás su historia, su evolución y cómo dominarla desde cero.</p>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-num">40+</span><span class="hstat-label">Años de historia</span></div>
+    <div class="hstat"><span class="hstat-num">750M</span><span class="hstat-label">Usuarios activos</span></div>
+    <div class="hstat"><span class="hstat-num">1.2B</span><span class="hstat-label">Hojas/día</span></div>
+    <div class="hstat"><span class="hstat-num">1985</span><span class="hstat-label">Año de nacimiento</span></div>
+  </div>
+</div>
+
+<!-- ORIGEN -->
+<div class="section" id="origen">
+  <div class="section-tag">🌱 El comienzo</div>
+  <h2>¿Por qué se <span>inventó</span> Excel?</h2>
+  <p class="section-intro reveal">A principios de los años 80, gestionar datos numéricos era un proceso lento y propenso a errores. Las empresas necesitaban una herramienta que automatizara los cálculos y organizara información de forma visual. La necesidad de superar a la competencia dio vida a Excel.</p>
+
+  <div class="dato-box reveal">
+    <span class="dato-icon">💡</span>
+    <div>
+      <div class="dato-title">El problema que resolvió Excel</div>
+      <div class="dato-text">En 1985, los profesionales pasaban <strong>horas o días</strong> creando hojas de cálculo manualmente en papel o con calculadoras. Las alternativas digitales como VisiCalc y Lotus 1-2-3 eran limitadas. Excel nació para <strong>democratizar el análisis de datos</strong> y poner ese poder en manos de cualquier persona con una computadora.</div>
+    </div>
+  </div>
+
+  <div class="dato-box reveal">
+    <span class="dato-icon">🎯</span>
+    <div>
+      <div class="dato-title">El nombre "Excel"</div>
+      <div class="dato-text">Microsoft eligió el nombre <strong>"Excel"</strong> porque significa <em>sobresalir</em> o <em>destacar</em> — reflejando la ambición de crear una hoja de cálculo que superara a todas las demás, especialmente a Lotus 1-2-3, el líder del mercado en esa época. El nombre transmitía excelencia y superioridad desde el primer momento.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- FUNDADORES -->
+<div class="section bg-alt" id="fundadores">
+  <div class="section-tag">👥 Las personas detrás</div>
+  <h2>Los <span>creadores</span> de Excel</h2>
+  <p class="section-intro reveal">Un equipo visionario liderado por Microsoft revolucionó el mundo del análisis de datos con una herramienta que cambiaría la forma de trabajar de millones de personas.</p>
+
+  <div class="founders-grid">
+    <div class="founder-card reveal">
+      <span class="founder-avatar">👨‍💼</span>
+      <div class="founder-name">Doug Klunder</div>
+      <div class="founder-role">Arquitecto principal</div>
+      <div class="founder-desc">El programador que escribió el código original de <strong>Excel 1.0 para Macintosh</strong>. Su trabajo técnico sentó las bases de todas las versiones futuras. Klunder implementó la arquitectura de cálculo y el motor de fórmulas que todavía funciona en Excel hoy.</div>
+    </div>
+    <div class="founder-card reveal reveal-delay-1">
+      <span class="founder-avatar">👨‍💻</span>
+      <div class="founder-name">Charles Simonyi</div>
+      <div class="founder-role">Líder de desarrollo</div>
+      <div class="founder-desc">Veterano de <strong>Xerox PARC</strong>, lideró el equipo de desarrollo en Microsoft. Definió la arquitectura y visión técnica de Excel como parte de Office. Simonyi aplicó conceptos de programación orientada a objetos que hicieron Excel extensible y potente.</div>
+    </div>
+    <div class="founder-card reveal reveal-delay-2">
+      <span class="founder-avatar">🏢</span>
+      <div class="founder-name">Microsoft</div>
+      <div class="founder-role">La empresa · 1985–Presente</div>
+      <div class="founder-desc">Microsoft lanzó Excel como respuesta directa a <strong>VisiCalc</strong> y <strong>Lotus 1-2-3</strong>, los líderes del mercado. A diferencia de PowerPoint (que fue adquirido), Excel fue desarrollado internamente desde el principio, convirtiéndose en la hoja de cálculo dominante que conocemos hoy.</div>
+    </div>
+  </div>
+
+  <div class="dato-box reveal">
+    <span class="dato-icon">💰</span>
+    <div>
+      <div class="dato-title">Excel nace dentro de Microsoft — Septiembre de 1985</div>
+      <div class="dato-text">A diferencia de PowerPoint (que fue adquirido), Excel fue <strong>desarrollado internamente</strong> por Microsoft desde el principio. Se lanzó en <strong>septiembre de 1985 para Macintosh</strong>, dos años antes de que existiera una versión para Windows. Bill Gates apostó fuerte por Excel como respuesta competitiva a Lotus 1-2-3, que dominaba el mercado de hojas de cálculo en PC.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- EVOLUCIÓN TIMELINE -->
+<div class="section" id="evolucion">
+  <div class="section-tag">📅 A través del tiempo</div>
+  <h2>La <span>evolución</span> de Excel</h2>
+  <p class="section-intro reveal">Desde una simple hoja de cálculo para Mac, hasta la plataforma de análisis en la nube que usamos hoy. Un viaje de más de 40 años.</p>
+
+  <div class="timeline">
+    <div class="titem reveal">
+      <span class="titem-year">1985</span>
+      <div class="titem-title">Excel 1.0 — El nacimiento 🐣</div>
+      <div class="titem-desc">Lanzado para <strong>Apple Macintosh</strong>. Primera hoja de cálculo con interfaz gráfica y ratón. Revolucionó el trabajo con datos numéricos ofreciendo una alternativa superior a VisiCalc. Solo disponible en Mac, superaba a la competencia con mejores gráficos y usabilidad.</div>
+      <span class="titem-highlight">Solo Mac · Interfaz gráfica · Revolucionario</span>
+    </div>
+    <div class="titem reveal">
+      <span class="titem-year">1987</span>
+      <div class="titem-title">Excel 2.0 — Llega a Windows 🪟</div>
+      <div class="titem-desc">Primera versión para <strong>Windows</strong>. Incluyó gráficos integrados y capacidad de crear macros básicas. Empezó la competencia directa con <strong>Lotus 1-2-3</strong>, el líder indiscutible en PC. Esta versión marcó el inicio de la dominación de Excel en el mercado empresarial.</div>
+      <span class="titem-highlight">Llega a Windows · Gráficos · Macros</span>
+    </div>
+    <div class="titem reveal">
+      <span class="titem-year">1993</span>
+      <div class="titem-title">Excel 5.0 — Visual Basic 💻</div>
+      <div class="titem-desc">Integración de <strong>VBA (Visual Basic for Applications)</strong>. Los usuarios podían automatizar tareas complejas con código. Esta versión transformó Excel de una hoja de cálculo a una plataforma de desarrollo. Las empresas empezaron a crear aplicaciones completas dentro de Excel.</div>
+      <span class="titem-highlight">VBA · Automatización · Programación</span>
+    </div>
+    <div class="titem reveal">
+      <span class="titem-year">2007</span>
+      <div class="titem-title">Excel 2007 — La revolución visual 🚀</div>
+      <div class="titem-desc">Rediseño completo de la interfaz con la <strong>Cinta de opciones (Ribbon)</strong> que aún usamos hoy. Nuevo formato <strong>.xlsx</strong> basado en XML comprimido. Límite expandido a <strong>1 millón de filas</strong> (1,048,576 exactamente) y 16,384 columnas. Gráficos profesionales y formato condicional mejorado.</div>
+      <span class="titem-highlight">Ribbon · .xlsx · 1M filas</span>
+    </div>
+    <div class="titem reveal">
+      <span class="titem-year">2010</span>
+      <div class="titem-title">Excel 2010 — Minigráficos 📈</div>
+      <div class="titem-desc">Introduce <strong>Sparklines (minigráficos)</strong> — pequeños gráficos dentro de celdas. Mejoras en tablas dinámicas y segmentación de datos. Excel se conecta a <strong>bases de datos externas</strong> más fácilmente. Las empresas empiezan a usar Excel como herramienta de Business Intelligence.</div>
+      <span class="titem-highlight">Sparklines · Segmentadores · Conexión BD</span>
+    </div>
+    <div class="titem reveal">
+      <span class="titem-year">2013</span>
+      <div class="titem-title">Excel 2013 — Power Query y Power Pivot 📊</div>
+      <div class="titem-desc">Herramientas de <strong>Business Intelligence</strong> integradas. <strong>Power Query</strong> permite importar, transformar y limpiar datos de múltiples fuentes. <strong>Power Pivot</strong> analiza millones de registros con modelos de datos relacionales. Excel se convierte en plataforma de análisis avanzado, no solo hoja de cálculo.</div>
+      <span class="titem-highlight">BI · Power Query · Big Data</span>
+    </div>
+    <div class="titem reveal">
+      <span class="titem-year">2016</span>
+      <div class="titem-title">Excel 2016 — Power BI 🔌</div>
+      <div class="titem-desc">Integración completa con <strong>Power BI</strong>. Nuevos tipos de gráficos (cascada, embudo, histograma, caja y bigotes). Mejoras en colaboración con <strong>OneDrive</strong>. Excel Online permite editar hojas desde el navegador sin instalar nada.</div>
+      <span class="titem-highlight">Power BI · Nuevos gráficos · OneDrive</span>
+    </div>
+    <div class="titem reveal">
+      <span class="titem-year">2019</span>
+      <div class="titem-title">Excel 2019 — Mapas y nuevas funciones 🗺️</div>
+      <div class="titem-desc">Gráficos de <strong>mapas geográficos</strong> automáticos. Nuevas funciones como <strong>CONCAT</strong>, <strong>IFS</strong> y <strong>MAXIFS</strong>. Mejoras en gráficos dinámicos. Herramientas de análisis visual más potentes que nunca.</div>
+      <span class="titem-highlight">Mapas · Nuevas funciones · Gráficos dinámicos</span>
+    </div>
+    <div class="titem reveal">
+      <span class="titem-year">2021</span>
+      <div class="titem-title">Excel 2021 — Funciones dinámicas 🎯</div>
+      <div class="titem-desc">Introducción de <strong>XLOOKUP</strong> (reemplazo de BUSCARV), <strong>FILTER</strong>, <strong>SORT</strong>, <strong>UNIQUE</strong> y otras funciones dinámicas que transforman cómo trabajamos con datos. Los resultados se actualizan automáticamente cuando los datos cambian. Revolución en la manipulación de datos.</div>
+      <span class="titem-highlight">XLOOKUP · FILTER · SORT · Arrays dinámicos</span>
+    </div>
+    <div class="titem reveal">
+      <span class="titem-year">2023-HOY</span>
+      <div class="titem-title">Excel 365 — IA con Copilot y Python 🤖</div>
+      <div class="titem-desc"><strong>Copilot IA</strong> genera fórmulas, gráficos y análisis desde lenguaje natural. <strong>Python integrado</strong> permite análisis avanzado sin salir de Excel. Colaboración en tiempo real. Siempre actualizado con nuevas funciones cada mes. La IA revoluciona cómo trabajamos con datos.</div>
+      <span class="titem-highlight">Copilot IA · Python · Coedición · Siempre actualizado</span>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- VERSIONES -->
+<div class="section bg-alt" id="versiones">
+  <div class="section-tag">📦 Todas las versiones</div>
+  <h2>Las <span>versiones</span> de Excel</h2>
+  <p class="section-intro reveal">Desde 1985 hasta hoy, cada versión agregó algo nuevo. Conoce el recorrido completo de la hoja de cálculo más usada del mundo.</p>
+
+  <div class="versions-grid">
+    <div class="version-card reveal"><div class="v-year">1985</div><div class="v-name">Excel 1.0</div><div class="v-desc">Solo Mac · Interfaz gráfica</div></div>
+    <div class="version-card reveal reveal-delay-1"><div class="v-year">1987</div><div class="v-name">Excel 2.0</div><div class="v-desc">Llega a Windows · Gráficos</div></div>
+    <div class="version-card reveal reveal-delay-2"><div class="v-year">1990</div><div class="v-name">Excel 3.0</div><div class="v-desc">Barra de herramientas · 3D</div></div>
+    <div class="version-card reveal"><div class="v-year">1992</div><div class="v-name">Excel 4.0</div><div class="v-desc">Macros mejoradas</div></div>
+    <div class="version-card reveal reveal-delay-1"><div class="v-year">1993</div><div class="v-name">Excel 5.0</div><div class="v-desc">VBA · Entra a Office</div></div>
+    <div class="version-card reveal reveal-delay-2"><div class="v-year">1995</div><div class="v-name">Excel 95</div><div class="v-desc">32-bit · Estabilidad</div></div>
+    <div class="version-card reveal"><div class="v-year">1997</div><div class="v-name">Excel 97</div><div class="v-desc">65,536 filas · Asistentes</div></div>
+    <div class="version-card reveal reveal-delay-1"><div class="v-year">2000</div><div class="v-name">Excel 2000</div><div class="v-desc">Web y HTML · Portapapeles</div></div>
+    <div class="version-card reveal reveal-delay-2"><div class="v-year">2002</div><div class="v-name">Excel XP</div><div class="v-desc">Panel de tareas · Recuperación</div></div>
+    <div class="version-card reveal"><div class="v-year">2003</div><div class="v-name">Excel 2003</div><div class="v-desc">Listas · XML nativo</div></div>
+    <div class="version-card reveal reveal-delay-1"><div class="v-year">2007</div><div class="v-name">Excel 2007</div><div class="v-desc">Ribbon · .xlsx · 1M filas</div></div>
+    <div class="version-card reveal reveal-delay-2"><div class="v-year">2010</div><div class="v-name">Excel 2010</div><div class="v-desc">Sparklines · Segmentadores</div></div>
+    <div class="version-card reveal"><div class="v-year">2013</div><div class="v-name">Excel 2013</div><div class="v-desc">Power Query · Power Pivot</div></div>
+    <div class="version-card reveal reveal-delay-1"><div class="v-year">2016</div><div class="v-name">Excel 2016</div><div class="v-desc">Power BI · Nuevos gráficos</div></div>
+    <div class="version-card reveal reveal-delay-2"><div class="v-year">2019</div><div class="v-name">Excel 2019</div><div class="v-desc">Mapas · CONCAT · IFS</div></div>
+    <div class="version-card reveal"><div class="v-year">2021</div><div class="v-name">Excel 2021</div><div class="v-desc">XLOOKUP · Arrays dinámicos</div></div>
+    <div class="version-card actual reveal"><div class="v-year">2023 – HOY</div><div class="v-name">Excel 365</div><div class="v-desc">Copilot IA · Python · Siempre actualizado</div><div class="v-badge">✨ VERSIÓN ACTUAL</div></div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- EXCEL HOY -->
+<div class="section" id="hoy">
+  <div class="section-tag">⚡ Excel 365</div>
+  <h2>Excel <span>hoy</span> — ¿Qué puede hacer?</h2>
+  <p class="section-intro reveal">La versión actual de Excel 365 es una plataforma completa de análisis de datos, inteligencia artificial y colaboración. Estas son sus capacidades más importantes que veremos en la sesión de hoy.</p>
+
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <span class="feat-icon">🤖</span>
+      <div>
+        <div class="feat-title">Análisis con IA (Copilot)</div>
+        <div class="feat-desc">Excel sugiere análisis, fórmulas y visualizaciones automáticamente usando inteligencia artificial. Escribe en lenguaje natural y Copilot crea las fórmulas por ti.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal reveal-delay-1">
+      <span class="feat-icon">☁️</span>
+      <div>
+        <div class="feat-title">Colaboración en la nube</div>
+        <div class="feat-desc">Varios usuarios pueden editar la misma hoja simultáneamente en tiempo real, como Google Sheets. Los cambios se sincronizan automáticamente.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal reveal-delay-2">
+      <span class="feat-icon">📱</span>
+      <div>
+        <div class="feat-title">Multiplataforma</div>
+        <div class="feat-desc">Funciona en Windows, Mac, navegador web y teléfono móvil. Puedes empezar en el computador y continuar desde el celular sin perder nada.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">📊</span>
+      <div>
+        <div class="feat-title">Power Query y Power Pivot</div>
+        <div class="feat-desc">Herramientas de Business Intelligence para transformar, limpiar y analizar millones de registros. Conecta múltiples fuentes de datos y crea modelos relacionales.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal reveal-delay-1">
+      <span class="feat-icon">💡</span>
+      <div>
+        <div class="feat-title">Ideas (IA)</div>
+        <div class="feat-desc">Genera automáticamente gráficos, tablas dinámicas y resúmenes con un clic. La IA encuentra patrones en tus datos que podrías no notar.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal reveal-delay-2">
+      <span class="feat-icon">🐍</span>
+      <div>
+        <div class="feat-title">Python integrado</div>
+        <div class="feat-desc">Ejecuta código Python directamente en Excel para análisis avanzado, machine learning y visualizaciones sin necesidad de herramientas externas.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">🎯</span>
+      <div>
+        <div class="feat-title">Funciones dinámicas</div>
+        <div class="feat-desc">XLOOKUP, FILTER, SORT, UNIQUE y otras funciones que se actualizan automáticamente cuando los datos cambian. Adiós a BUSCARV.</div>
+      </div>
+    </div>
+    <div class="feat-card reveal reveal-delay-1">
+      <span class="feat-icon">🗺️</span>
+      <div>
+        <div class="feat-title">Gráficos de mapas</div>
+        <div class="feat-desc">Crea automáticamente mapas geográficos desde datos de ubicación. Visualiza ventas, población o cualquier métrica por región.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dato-box reveal" style="margin-top:32px;">
+    <span class="dato-icon">📊</span>
+    <div>
+      <div class="dato-title">Un dato que sorprende</div>
+      <div class="dato-text">Se estima que se crean <strong>más de 1.2 mil millones de hojas de cálculo de Excel cada día</strong> en todo el mundo. Esto equivale a <strong>13,889 hojas por segundo</strong>. Excel está tan integrado en la cultura empresarial, académica y personal que es imposible imaginar el mundo moderno sin él. El 80% de las empresas Fortune 500 dependen de Excel para decisiones críticas de negocio.</div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- AGENDA DEL DÍA -->
+<div class="section bg-alt" id="agenda">
+  <div class="section-tag">📅 Plan de hoy</div>
+  <h2>Agenda de la <span>sesión</span></h2>
+  <p class="section-intro reveal">Esta es la hoja de ruta para la jornada de hoy. 6 horas de aprendizaje práctico (12:00–18:00) divididas en tres bloques con dos recesos.</p>
+
+  <div class="agenda-grid">
+    <div class="agenda-card reveal" style="--ac-color:#217346;">
+      <div class="agenda-num">A</div>
+      <div class="agenda-hora">12:00 – 14:00</div>
+      <div class="agenda-title">Bloque A · Intro y grupos</div>
+      <div class="agenda-desc">Historia de Excel, evolución, características de Excel 365 y exploración de pestañas y grupos de herramientas</div>
+    </div>
+    <div class="agenda-card reveal reveal-delay-1" style="--ac-color:#e67e22;">
+      <div class="agenda-num">☕</div>
+      <div class="agenda-hora">14:00 – 14:20</div>
+      <div class="agenda-title">Receso 1</div>
+      <div class="agenda-desc">Descanso · 20 minutos</div>
+    </div>
+    <div class="agenda-card reveal reveal-delay-2" style="--ac-color:#8b5cf6;">
+      <div class="agenda-num">B</div>
+      <div class="agenda-hora">14:20 – 16:00</div>
+      <div class="agenda-title">Bloque B · Atajos y práctica</div>
+      <div class="agenda-desc">Atajos de teclado de Excel 365 para Windows y ejercicios de navegación y edición eficiente</div>
+    </div>
+    <div class="agenda-card reveal" style="--ac-color:#e67e22;">
+      <div class="agenda-num">☕</div>
+      <div class="agenda-hora">16:00 – 16:20</div>
+      <div class="agenda-title">Receso 2</div>
+      <div class="agenda-desc">Descanso · 20 minutos</div>
+    </div>
+    <div class="agenda-card reveal reveal-delay-1" style="--ac-color:#2b579a;">
+      <div class="agenda-num">C</div>
+      <div class="agenda-hora">16:20 – 18:00</div>
+      <div class="agenda-title">Bloque C · Actividad</div>
+      <div class="agenda-desc">Actividad práctica: Ejercicios de formato, organización de datos y entrega del inventario con formato profesional</div>
+    </div>
+  </div>
+
+  <div class="dato-box reveal" style="margin-top:28px; --ac-color:#217346;">
+    <span class="dato-icon">⏱️</span>
+    <div>
+      <div class="dato-title">Tiempo efectivo de la sesión</div>
+      <div class="dato-text">
+        Horario: <strong>12:00 – 18:00</strong> · Duración total: 6 horas<br>
+        Recesos: 14:00–14:20 y 16:00–16:20 (40 min en total)<br>
+        <strong>Tiempo efectivo de trabajo: 5 horas 20 minutos</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Prevención y Control Ambiental · <span>Sesión 3-5 · Excel 365</span></p>
+  <p>Centro Agroempresarial y Desarrollo Pecuario del Huila · <span>SENA</span></p>
+  <p>Instructor: <span>Julián Andrés Trujillo Morales</span> · Ficha <span>3410069</span></p>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold:0.06 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+</script>
+</body>
+</html>
